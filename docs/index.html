@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sistema de design · Caixa</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../estilos/caixa.css" />
+    <link rel="stylesheet" href="sistema.css" />
+  </head>
+
+  <body>
+    <header class="cabeca">
+      <div class="cabeca__interno">
+        <div>
+          <p class="olho">Sistema de design</p>
+          <h1 class="cabeca__titulo">Caixa</h1>
+          <p class="cabeca__nota">
+            Esta página lê o CSS aplicado e calcula o contraste ao vivo. Mudar um
+            token muda o que está aqui, então ela não tem como divergir do produto.
+          </p>
+        </div>
+
+        <label class="seletor">
+          <span class="seletor__rotulo">Tema</span>
+          <select id="tema" class="seletor__campo">
+            <option value="sistema">Do sistema</option>
+            <option value="claro">Claro</option>
+            <option value="escuro">Escuro</option>
+          </select>
+        </label>
+      </div>
+    </header>
+
+    <nav class="atalhos" aria-label="Seções">
+      <a href="#secao-principios">Princípios</a>
+      <a href="#secao-cores">Cores</a>
+      <a href="#secao-contraste">Contraste</a>
+      <a href="#secao-vitais">Performance</a>
+      <a href="#secao-componentes">Componentes</a>
+      <a href="#secao-estados">Estados</a>
+    </nav>
+
+    <main class="doc">
+      <section id="secao-principios" class="secao">
+        <h2 class="secao__titulo">Princípios</h2>
+
+        <div class="principios">
+          <article class="principio">
+            <h3>O token existe para ser trocado</h3>
+            <p>
+              Toda cor, canto e sombra vem de uma variável. O tema escuro não
+              reescreve regra nenhuma: ele troca valores. Uma cor escrita direto
+              numa regra é uma cor que o tema não alcança.
+            </p>
+          </article>
+
+          <article class="principio">
+            <h3>Contraste é medido, não estimado</h3>
+            <p>
+              Nenhuma cor entra na paleta sem passar por cálculo. A razão de
+              contraste entre duas superfícies escuras satura perto de 1,4 por
+              mais que se afaste os tons, e isso só aparece medindo.
+            </p>
+          </article>
+
+          <article class="principio">
+            <h3>Três pesos de texto, não cinco</h3>
+            <p>
+              Cada nível a mais é uma decisão que alguém vai tomar diferente do
+              resto do time. Escala pequena é escala que se respeita.
+            </p>
+          </article>
+
+          <article class="principio">
+            <h3>O espaço vem da estrutura</h3>
+            <p>
+              O espaçamento entre blocos vem de uma coluna com
+              <code>gap</code>, e não de margem em cada componente. Margem avulsa
+              funciona entre dois vizinhos e cola quando alguém insere algo no
+              meio.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="secao-cores" class="secao">
+        <h2 class="secao__titulo">Cores</h2>
+        <p class="secao__nota">
+          Os valores abaixo são lidos do documento. Trocar o tema no seletor
+          acima muda o que aparece aqui.
+        </p>
+
+        <div id="cores"></div>
+      </section>
+
+      <section id="secao-contraste" class="secao">
+        <h2 class="secao__titulo">Contraste</h2>
+        <p class="secao__nota">
+          Cada combinação de texto e fundo que o sistema realmente usa, com a
+          razão calculada pela fórmula da WCAG 2.1. O mínimo para texto normal é
+          4,5.
+        </p>
+
+        <div id="contraste"></div>
+      </section>
+
+      <section id="secao-vitais" class="secao">
+        <h2 class="secao__titulo">Performance</h2>
+        <p class="secao__nota">
+          As métricas que o Google usa para ranquear, medidas nesta página com
+          <code>PerformanceObserver</code>, sem biblioteca. Os números mudam
+          conforme você navega.
+        </p>
+
+        <div id="vitais"></div>
+      </section>
+
+      <section id="secao-componentes" class="secao">
+        <h2 class="secao__titulo">Componentes</h2>
+
+        <article class="componente">
+          <header class="componente__cabeca">
+            <h3>Campo de valor</h3>
+            <code>&lt;campo-valor&gt;</code>
+          </header>
+
+          <p class="componente__nota">
+            Guarda centavos em inteiro e preserva a posição do cursor ao
+            reformatar. Digite no meio do valor para ver: o cursor continua
+            depois do mesmo dígito.
+          </p>
+
+          <div class="palco">
+            <campo-valor id="exemplo-valor" rotulo="Valor" valor="123456"></campo-valor>
+            <p class="palco__saida" id="exemplo-valor-saida">123456 centavos</p>
+          </div>
+
+          <details class="detalhe">
+            <summary>Por que centavos em inteiro</summary>
+            <p>
+              <code>0.1 + 0.2</code> dá <code>0.30000000000000004</code> em ponto
+              flutuante. Num sistema de cobrança essa diferença vira divergência
+              de centavo no fechamento do dia. Dinheiro é contagem, não medida.
+            </p>
+          </details>
+        </article>
+
+        <article class="componente">
+          <header class="componente__cabeca">
+            <h3>Campo de texto</h3>
+            <code>.campo</code>
+          </header>
+
+          <p class="componente__nota">
+            O estado de erro muda a borda <strong>e</strong> marca
+            <code>aria-invalid</code>. A borda vermelha sozinha não informa nada a
+            quem usa leitor de tela.
+          </p>
+
+          <div class="palco">
+            <label class="campo">
+              <span class="campo__rotulo">E-mail do cliente</span>
+              <input
+                id="exemplo-campo-erro"
+                class="campo__entrada"
+                type="email"
+                value="cliente@exemplo"
+                aria-invalid="false"
+                aria-describedby="exemplo-mensagem"
+              />
+            </label>
+            <p class="erro" id="exemplo-mensagem" role="alert"></p>
+
+            <button id="exemplo-erro" class="botao">Alternar o estado de erro</button>
+          </div>
+        </article>
+
+        <article class="componente">
+          <header class="componente__cabeca">
+            <h3>Ficha</h3>
+            <code>.ficha</code>
+          </header>
+
+          <p class="componente__nota">
+            Número grande com rótulo pequeno. A variante de atenção existe para
+            quando o número exige ação, e não para toda ficha que muda.
+          </p>
+
+          <div class="palco">
+            <div class="fichas">
+              <div class="ficha">
+                <span class="ficha__valor">12</span>
+                <span class="ficha__rotulo">confirmadas</span>
+              </div>
+              <div class="ficha ficha--atencao">
+                <span class="ficha__valor">3</span>
+                <span class="ficha__rotulo">na fila</span>
+              </div>
+              <div class="ficha ficha--erro">
+                <span class="ficha__valor">1</span>
+                <span class="ficha__rotulo">recusada</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="secao-estados" class="secao">
+        <h2 class="secao__titulo">Estados</h2>
+        <p class="secao__nota">
+          Cada estado de uma cobrança tem cor, rótulo e uma barra à esquerda. São
+          três sinais porque a cor sozinha some para quem tem dificuldade de
+          distingui-la.
+        </p>
+
+        <ul class="fila">
+          <li class="linha linha--pendente">
+            <div class="linha__corpo">
+              <p class="linha__descricao">Plano mensal</p>
+              <p class="linha__cliente">ana@exemplo.com</p>
+              <p class="linha__tentativas">tentativa 2</p>
+            </div>
+            <div class="linha__lado">
+              <span class="linha__valor">R$ 49,90</span>
+              <span class="etiqueta etiqueta--pendente">Na fila</span>
+            </div>
+          </li>
+
+          <li class="linha linha--enviando">
+            <div class="linha__corpo">
+              <p class="linha__descricao">Consulta de retorno</p>
+              <p class="linha__cliente">bruno@exemplo.com</p>
+            </div>
+            <div class="linha__lado">
+              <span class="linha__valor">R$ 180,00</span>
+              <span class="etiqueta etiqueta--enviando">Enviando</span>
+            </div>
+          </li>
+
+          <li class="linha linha--confirmada">
+            <div class="linha__corpo">
+              <p class="linha__descricao">Mensalidade de março</p>
+              <p class="linha__cliente">carla@exemplo.com</p>
+            </div>
+            <div class="linha__lado">
+              <span class="linha__valor">R$ 320,00</span>
+              <span class="etiqueta etiqueta--confirmada">Confirmada</span>
+            </div>
+          </li>
+
+          <li class="linha linha--recusada">
+            <div class="linha__corpo">
+              <p class="linha__descricao">Assinatura anual</p>
+              <p class="linha__cliente">davi@exemplo.com</p>
+              <p class="linha__erro">Cartão recusado pelo emissor.</p>
+            </div>
+            <div class="linha__lado">
+              <span class="linha__valor">R$ 1.200,00</span>
+              <span class="etiqueta etiqueta--recusada">Recusada</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <script type="module" src="sistema.js"></script>
+  </body>
+</html>

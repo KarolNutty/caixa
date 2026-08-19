@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Caixa · cobranças que não se perdem</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="estilos/caixa.css" />
+  </head>
+
+  <body>
+    <header class="topo">
+      <div class="topo__interno">
+        <div>
+          <h1 class="marca">Caixa</h1>
+          <p class="marca__nota">Cobranças que sobrevivem à queda de internet</p>
+        </div>
+      </div>
+    </header>
+
+    <p id="conexao" class="aviso-conexao" role="status" hidden></p>
+
+    <main class="pagina">
+      <section class="cartao" aria-labelledby="titulo-nova">
+        <h2 id="titulo-nova" class="cartao__titulo">Nova cobrança</h2>
+
+        <campo-valor rotulo="Valor" data-campo="valor"></campo-valor>
+        <p class="erro" data-erro="valor" role="alert"></p>
+
+        <label class="campo">
+          <span class="campo__rotulo">Descrição</span>
+          <input
+            id="descricao"
+            data-campo="descricao"
+            class="campo__entrada"
+            type="text"
+            autocomplete="off"
+            placeholder="Plano mensal, consulta, mensalidade…"
+          />
+        </label>
+        <p class="erro" data-erro="descricao" role="alert"></p>
+
+        <label class="campo">
+          <span class="campo__rotulo">E-mail do cliente</span>
+          <input
+            id="cliente"
+            data-campo="cliente"
+            class="campo__entrada"
+            type="email"
+            autocomplete="email"
+            placeholder="cliente@exemplo.com"
+          />
+        </label>
+        <p class="erro" data-erro="cliente" role="alert"></p>
+
+        <button id="confirmar" class="botao" type="button">Criar cobrança</button>
+
+        <p class="cartao__rodape">
+          A cobrança é gravada no aparelho antes de ir para o servidor. Se a
+          internet cair, ela espera e sobe sozinha depois.
+        </p>
+      </section>
+
+      <section class="cartao" aria-labelledby="titulo-fila">
+        <h2 id="titulo-fila" class="cartao__titulo">Fila</h2>
+
+        <div id="resumo" class="fichas"></div>
+
+        <ul id="fila" class="fila" aria-live="polite"></ul>
+      </section>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

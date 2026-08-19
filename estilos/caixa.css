@@ -1,0 +1,401 @@
+/*
+ * Nada de framework, e a paleta é declarada uma vez.
+ *
+ * Variáveis existem para o tema escuro trocar valores sem tocar em regra
+ * nenhuma, e para os Web Components herdarem: o Shadow DOM bloqueia CSS de
+ * fora, mas variáveis atravessam de propósito.
+ */
+:root {
+  color-scheme: light;
+
+  --acento: #4f46e5;
+  --acento-forte: #3730a3;
+  --acento-claro: #eef2ff;
+
+  /*
+   * O verde e o vermelho são mais escuros do que o tom "natural" da escala.
+   *
+   * Os valores anteriores, #059669 e #dc2626, davam 3,58 e 4,41 de contraste
+   * sobre o próprio fundo claro, abaixo do mínimo de 4,5. Descobri isso na
+   * página de documentação, que mede em vez de afirmar.
+   *
+   * Cor de estado é lida em etiqueta pequena, que é justamente onde contraste
+   * baixo mais atrapalha.
+   */
+  --sucesso: #047857;
+  --sucesso-claro: #ecfdf5;
+  --atencao: #b45309;
+  --atencao-claro: #fffbeb;
+  --erro: #c81e1e;
+  --erro-claro: #fef2f2;
+
+  --tinta: #111827;
+  --tinta-media: #4b5563;
+  --tinta-fraca: #6b7280;
+
+  --fundo: #f8fafc;
+  --superficie: #ffffff;
+  --campo: #f9fafb;
+  --borda: #e5e7eb;
+
+  --sombra: 0 1px 2px rgb(17 24 39 / 0.04), 0 8px 24px rgb(17 24 39 / 0.06);
+  --canto: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    /* Sobre fundo escuro, cor saturada vibra: o acento clareia e dessatura. */
+    --acento: #a5b4fc;
+    --acento-forte: #c7d2fe;
+    --acento-claro: #262747;
+
+    --sucesso: #34d399;
+    --sucesso-claro: #12291f;
+    --atencao: #fbbf24;
+    --atencao-claro: #2b2314;
+    --erro: #f87171;
+    --erro-claro: #2c1a1a;
+
+    --tinta: #f3f4f6;
+    --tinta-media: #b6bcc7;
+    --tinta-fraca: #868d99;
+
+    --fundo: #0f1117;
+    --superficie: #171a21;
+    --campo: #1e222b;
+    --borda: #2a2f3a;
+
+    --sombra: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.28);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--fundo);
+  color: var(--tinta);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* O contorno de foco é visível de propósito: quem navega por teclado precisa
+   saber onde está, e removê-lo é o atalho mais comum para quebrar isso. */
+:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.topo {
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borda);
+}
+
+.topo__interno {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 22px 24px;
+}
+
+.marca {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.marca__nota {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: var(--tinta-fraca);
+}
+
+.aviso-conexao {
+  margin: 0;
+  padding: 12px 24px;
+  background: var(--atencao-claro);
+  color: var(--atencao);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.pagina {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+  display: grid;
+  /* `minmax(0, 1fr)`: `1fr` puro não encolhe abaixo do conteúdo, e um valor
+     longo empurraria a coluna para fora da tela. */
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .pagina {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.cartao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--canto);
+  box-shadow: var(--sombra);
+  padding: 24px;
+}
+
+.cartao__titulo {
+  margin: 0 0 20px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cartao__rodape {
+  margin: 16px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--tinta-fraca);
+}
+
+.campo {
+  display: block;
+  margin-top: 16px;
+}
+
+.campo__rotulo {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-fraca);
+  margin-bottom: 6px;
+}
+
+.campo__entrada {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: var(--tinta);
+  background: var(--campo);
+  border: 2px solid var(--borda);
+  border-radius: 12px;
+}
+
+.campo__entrada:focus-visible {
+  outline: none;
+  border-color: var(--acento);
+}
+
+.campo__entrada[aria-invalid='true'] {
+  border-color: var(--erro);
+}
+
+.erro {
+  margin: 6px 0 0;
+  min-height: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--erro);
+}
+
+.botao {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--acento);
+  border: none;
+  border-radius: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .botao {
+    color: var(--fundo);
+  }
+}
+
+.botao:hover {
+  background: var(--acento-forte);
+}
+
+.fichas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ficha {
+  padding: 14px 16px;
+  background: var(--campo);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.ficha--atencao {
+  background: var(--atencao-claro);
+  border-color: transparent;
+}
+
+.ficha--erro {
+  background: var(--erro-claro);
+  border-color: transparent;
+}
+
+.ficha__valor {
+  display: block;
+  font-size: 19px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.ficha__rotulo {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--tinta-fraca);
+}
+
+.fila {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  background: var(--campo);
+  border: 1px solid var(--borda);
+  border-left: 3px solid var(--borda);
+  border-radius: 12px;
+}
+
+.linha--enviando {
+  border-left-color: var(--acento);
+}
+.linha--confirmada {
+  border-left-color: var(--sucesso);
+}
+.linha--recusada {
+  border-left-color: var(--erro);
+}
+.linha--pendente {
+  border-left-color: var(--atencao);
+}
+
+.linha__corpo {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.linha__descricao {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+.linha__cliente,
+.linha__tentativas {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: var(--tinta-fraca);
+  overflow-wrap: break-word;
+}
+
+.linha__erro {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--erro);
+}
+
+.linha__lado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.linha__valor {
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.etiqueta {
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.etiqueta--pendente {
+  color: var(--atencao);
+  background: var(--atencao-claro);
+}
+.etiqueta--enviando {
+  color: var(--acento);
+  background: var(--acento-claro);
+}
+.etiqueta--confirmada {
+  color: var(--sucesso);
+  background: var(--sucesso-claro);
+}
+.etiqueta--recusada {
+  color: var(--erro);
+  background: var(--erro-claro);
+}
+
+.descartar {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  color: var(--tinta-fraca);
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.descartar:hover {
+  color: var(--tinta);
+  background: var(--borda);
+}
+
+.vazio {
+  margin: 0;
+  padding: 28px 4px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--tinta-fraca);
+  max-width: 52ch;
+}

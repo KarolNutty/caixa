@@ -1,0 +1,21 @@
+{
+  "name": "caixa",
+  "version": "1.0.0",
+  "description": "Fila de cobrancas que sobrevive a queda de internet, em JavaScript puro",
+  "scripts": {
+    "dev": "node servidor.js",
+    "test": "vitest run",
+    "test:ver": "vitest",
+    "build": "node construir.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fake-indexeddb": "^6.2.5",
+    "jsdom": "^30.0.1",
+    "vitest": "^4.1.11"
+  },
+  "private": true,
+  "type": "module"
+}
