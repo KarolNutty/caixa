@@ -5,6 +5,11 @@ pagamento, a rede cai, e nada se perde nem duplica.
 
 JavaScript puro. Sem React, sem build, sem bundler. Abre no navegador e funciona.
 
+![O caixa, com a fila de cobranças](docs/imagens/caixa.png)
+
+> Uma cobrança criada sem rede fica na fila e sobe sozinha depois. A pessoa vê
+> em que estado cada uma está, e o que já foi tentado.
+
 ```bash
 npm install
 npm run dev      # http://localhost:4000
@@ -152,6 +157,9 @@ diferença vira divergência de centavo no fechamento do dia. Dinheiro é contag
 não medida.
 
 ### Documentação que mede em vez de afirmar
+
+![A página do sistema de design](docs/imagens/sistema.png)
+
 
 A página em `docs/` lê os tokens do documento com `getComputedStyle` e calcula a
 razão de contraste de cada combinação que o produto realmente usa.
